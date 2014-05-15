@@ -1,7 +1,5 @@
 package com.shoplove.tracking;
 
-import android.util.Log;
-
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.NetworkResponse;
@@ -18,8 +16,6 @@ import java.util.Map;
  */
 public class TrackEventRequest extends Request<String> {
 
-    public static final String TAG = "TrackEventRequest";
-
     private ITrackEvent mTrackEvent;
 
     public TrackEventRequest(String baseUrl, ITrackEvent trackEvent) {
@@ -30,7 +26,6 @@ public class TrackEventRequest extends Request<String> {
         setRetryPolicy(new DefaultRetryPolicy(10000, 3, 2));
     }
 
-
     @Override
     protected Map<String, String> getParams() throws AuthFailureError { return mTrackEvent.getTrackEventParams(); }
 
@@ -40,15 +35,15 @@ public class TrackEventRequest extends Request<String> {
     @Override
     protected void deliverResponse(String response) {
         try {
-            Log.d(TAG, "Deliver Response for " + this.getUrl() + " " + getParams() + " " + response);
+            ShopLoveTracking.logger().debug("Deliver Response for " + this.getUrl() + " " + getParams() + " " + response);
         }catch (Exception exc) {
-            Log.d(TAG, "Deliver Response for " + this.getUrl() + " " + response);
+            ShopLoveTracking.logger().debug("Deliver Response for " + this.getUrl() + " " + response);
         }
     }
 
     @Override
     public void deliverError(VolleyError error) {
-        Log.w(TAG, "Deliver Error " + error);
+        ShopLoveTracking.logger().error("Deliver Error " + error);
     }
 
     @Override
@@ -59,8 +54,6 @@ public class TrackEventRequest extends Request<String> {
         } catch (UnsupportedEncodingException e) {
             parsed = new String(response.data);
         }
-
-        Log.d(TAG, "Network response " + response.statusCode + " " + response.headers + " parsed " + parsed);
 
         return Response.success(parsed, HttpHeaderParser.parseCacheHeaders(response));
     }
@@ -80,7 +73,7 @@ public class TrackEventRequest extends Request<String> {
         }
 
         if(volleyError.networkResponse != null) {
-            Log.e(TAG, "ERROR: " + volleyError.networkResponse.statusCode + " " + parsed + " " + volleyError.networkResponse.headers + " " + volleyError.networkResponse.data);
+            ShopLoveTracking.logger().error("ERROR: " + volleyError.networkResponse.statusCode + " " + parsed + " " + volleyError.networkResponse.headers + " " + volleyError.networkResponse.data);
         } else {
 
         }

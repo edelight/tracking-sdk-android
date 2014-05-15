@@ -21,7 +21,7 @@ import java.util.Map;
  */
 public class EventHandler {
 
-    private RequestHandler mRequestHandler;
+    private IRequestHandler mRequestHandler;
 
     private IHttpConfig mHttpConfig;
     private AbstractHttpClient mHttpClient;
@@ -29,11 +29,8 @@ public class EventHandler {
 
     private String mAppToken;
 
-    private Context mApplicationContext;
-
     EventHandler(Activity activity, final String appToken) {
         mAppToken = appToken;
-        mApplicationContext = activity.getApplicationContext();
         mHttpClient = createHttpClient();
         mHttpConfig = new ShopLoveHttpConfig(activity);
         mRequestHandler = new RequestHandler(activity, mHttpClient, mHttpConfig);
@@ -41,16 +38,21 @@ public class EventHandler {
 
     public void track(String action) {
 
-        if(action == null || action.isEmpty()) return;
+        if(action == null || action.isEmpty()) {
+            ShopLoveTracking.logger().warn("Empty Action!");
+            return;
+        }
 
         Map<String, String> params = new HashMap<String, String>();
         params.put("action", action);
 
-        Map<String, String> headers = getBaseHeaders(mApplicationContext);
+        Map<String, String> headers = getBaseHeaders();
 
         Event event = new Event(null, headers, params);
 
-        mRequestHandler.addTrackEvent(event);
+        if(!mRequestHandler.addTrackEvent(event)) {
+            ShopLoveTracking.logger().error("Malformed TrackEvent " + event);
+        }
     }
 
 
@@ -75,7 +77,7 @@ public class EventHandler {
         return client;
     }
 
-    private Map<String, String> getBaseHeaders(Context context) {
+    private Map<String, String> getBaseHeaders() {
 
         if(mHttpConfig == null) return null;
 

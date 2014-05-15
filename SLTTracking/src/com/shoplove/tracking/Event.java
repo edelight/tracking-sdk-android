@@ -31,4 +31,9 @@ public class Event implements ITrackEvent {
     public Map<String, String> getTrackEventParams() {
         return mParams;
     }
+
+    @Override
+    public String toString() {
+        return "[Event: Path " + getTrackEventPath() + ", Headers " + getTrackEventHeaders() + ", Params " + getTrackEventParams() + "]";
+    }
 }

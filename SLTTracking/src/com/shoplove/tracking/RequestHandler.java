@@ -12,7 +12,7 @@ import org.apache.http.impl.client.AbstractHttpClient;
 /**
  * Created by michaelbanholzer on 15/05/14.
  */
-public class RequestHandler {
+public class RequestHandler implements IRequestHandler {
 
     private RequestQueue mRequestQueue;
 
@@ -26,11 +26,22 @@ public class RequestHandler {
 
 
     public boolean addTrackEvent(ITrackEvent event) {
+        if(validateTrackEvent(event)) {
+            TrackEventRequest request = new TrackEventRequest(mHTTPConfig.getBaseUrl(), event);
+            mRequestQueue.add(request);
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
 
-        TrackEventRequest request = new TrackEventRequest(mHTTPConfig.getBaseUrl(), event);
-
-        mRequestQueue.add(request);
-
-        return true;
+    private boolean validateTrackEvent(ITrackEvent event) {
+        if(event.getTrackEventParams() == null || event.getTrackEventParams().size()<=0) {
+            return false;
+        }
+        else {
+            return true;
+        }
     }
 }
