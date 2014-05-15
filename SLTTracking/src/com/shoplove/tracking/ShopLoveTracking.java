@@ -25,7 +25,7 @@ public class ShopLoveTracking {
             sEventHandler.track("install-sdk");
         }
         else {
-            ShopLoveTracking.logger().warn("ShopLoveTracking has not yet been initialized! First call appDidLaunch() with your appToken");
+            ShopLoveTracking.logger().error("ShopLoveTracking has not yet been initialized! First call appDidLaunch() with your appToken!");
         }
     }
 
