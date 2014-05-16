@@ -66,4 +66,4 @@ build/
 atlassian-ide-plugin.xml
 
 # add exception of google play services jar
-!google-play-services.jar
+!volley.jar
