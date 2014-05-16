@@ -22,9 +22,9 @@ In order that the ShopLoveTracking module gets compiled as well, open the build.
 
 ```gradle
 dependencies {
-	…
+
     	compile project(':SLTTracking')
-	…
+
 }
 ```
 
@@ -53,7 +53,7 @@ import com.shoplove.tracking.ShopLoveTracking;
 
 
 public class MainActivity extends Activity {
-…
+// …
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,11 +61,12 @@ public class MainActivity extends Activity {
 
         ShopLoveTracking.appDidLaunch(this, "{YourAppToken}");
     }
-…
+// …
 }
 
 ```
 
+Now you’re ready to use the ShopLoveTracking SDK.
 
 
 
