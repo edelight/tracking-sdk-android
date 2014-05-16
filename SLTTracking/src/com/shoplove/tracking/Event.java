@@ -3,7 +3,7 @@ package com.shoplove.tracking;
 import java.util.Map;
 
 /**
- * Created by michaelbanholzer on 15/05/14.
+ * A basic implementation of the ITrackEvent interface.
  */
 public class Event implements ITrackEvent {
 
@@ -11,6 +11,13 @@ public class Event implements ITrackEvent {
     private Map<String, String> mHeaders;
     private String mPath;
 
+    /**
+     * Creates a new Event object with all required information to conform to the ITrackEvent interface.
+     *
+     * @param path The path to append to the baseUrl.
+     * @param headers The header information of the request.
+     * @param params The body information of the request.
+     */
     Event(String path, Map<String, String> headers, Map<String, String> params) {
         mPath = path;
         mHeaders = headers;

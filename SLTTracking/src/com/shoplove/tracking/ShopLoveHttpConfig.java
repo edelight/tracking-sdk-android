@@ -9,7 +9,7 @@ import android.provider.Settings;
 import java.util.Locale;
 
 /**
- * Created by michaelbanholzer on 15/05/14.
+ * The default ShopLove API configuration.
  */
 public class ShopLoveHttpConfig implements IHttpConfig {
 
@@ -45,6 +45,12 @@ public class ShopLoveHttpConfig implements IHttpConfig {
     }
 
 
+    /**
+     * Creates and returns an app specific User-Agent.
+     *
+     * @param context The Application Context.
+     * @return The created user agent string.
+     */
     private String createUserAgent(Context context) {
         String applicationName = "";
         String versionName = "";
@@ -72,6 +78,11 @@ public class ShopLoveHttpConfig implements IHttpConfig {
         return userAgent;
     }
 
+    /**
+     *
+     * @param context The Application Context.
+     * @return The retrieved vendor Id.
+     */
     private String getVendorId(Context context) {
         return Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
     }

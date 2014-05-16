@@ -12,12 +12,20 @@ import java.io.UnsupportedEncodingException;
 import java.util.Map;
 
 /**
- * Created by michaelbanholzer on 15/05/14.
+ * Represents the default POST request for the ShopLove Tracking SDK.
+ * The passed trackEvent data in the constructor are used to initialize a valid volley POST request.
  */
 public class TrackEventRequest extends Request<String> {
 
+    /** The used trackEvent data object providing the necessary information for the request. */
     private ITrackEvent mTrackEvent;
 
+    /**
+     * Creates a new TrackEventRequest based on the passed baseUrl and the trackEvent information.
+     *
+     * @param baseUrl The baseUrl to which the POST request should be sent.
+     * @param trackEvent A trackEvent data object providing the basic request information such as Header and Body.
+     */
     public TrackEventRequest(String baseUrl, ITrackEvent trackEvent) {
         super(Method.POST, assembledUrl(baseUrl, trackEvent), null);
 
@@ -82,6 +90,13 @@ public class TrackEventRequest extends Request<String> {
     }
 
 
+    /**
+     * Appends the path provided by the trackEvent data object to the baseUrl if any.
+     *
+     * @param baseUrl The baseUrl.
+     * @param trackEvent A trackEvent data object providing an appending path.
+     * @return The assembled path.
+     */
     private static String assembledUrl(String baseUrl, ITrackEvent trackEvent) {
         StringBuilder urlBuilder = new StringBuilder();
         urlBuilder.append(baseUrl);

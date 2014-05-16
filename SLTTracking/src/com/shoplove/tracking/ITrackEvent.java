@@ -3,12 +3,23 @@ package com.shoplove.tracking;
 import java.util.Map;
 
 /**
- * Created by michaelbanholzer on 15/05/14.
+ * The basic information for the POST request.
  */
 public interface ITrackEvent {
 
+    /**
+     * @return A path which will be appended to the base url.
+     */
     public String getTrackEventPath();
+
+    /**
+     * @return The Header fields for the POST request.
+     */
     public Map<String, String> getTrackEventHeaders();
+
+    /**
+     * @return The Body parameters for the POST request.
+     */
     public Map<String, String> getTrackEventParams();
 
 }

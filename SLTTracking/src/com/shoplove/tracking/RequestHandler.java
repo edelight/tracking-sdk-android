@@ -10,14 +10,24 @@ import com.android.volley.toolbox.Volley;
 import org.apache.http.impl.client.AbstractHttpClient;
 
 /**
- * Created by michaelbanholzer on 15/05/14.
+ * The RequestHandler used in the sdk.
+ * It is built upon the volley framework and thus uses a RequestQueue to manage all requests.
  */
 public class RequestHandler implements IRequestHandler {
 
+    /** The volley queue wherein all requests are handled. */
     private RequestQueue mRequestQueue;
 
+    /** The Http configuration for the requests. */
     private IHttpConfig mHTTPConfig;
 
+    /**
+     * Creates a new RequestHandler object with the given configuration.
+     *
+     * @param context The Application Context.
+     * @param httpClient The used HttpClient to send the requests.
+     * @param httpConfig The Http configuration for the requests.
+     */
     RequestHandler(Context context, AbstractHttpClient httpClient, IHttpConfig httpConfig) {
         mHTTPConfig = httpConfig;
         HttpStack httpStack = new HttpClientStack( httpClient );
@@ -25,6 +35,13 @@ public class RequestHandler implements IRequestHandler {
     }
 
 
+    /**
+     * Creates a new request with the passed trackevent.
+     * The trackevent will be ignored if you pass a malformed trackevent data.
+     *
+     * @param event The event to send.
+     * @return True if it's a valid trackevent data and the request was enqueued.
+     */
     public boolean addTrackEvent(ITrackEvent event) {
         if(validateTrackEvent(event)) {
             TrackEventRequest request = new TrackEventRequest(mHTTPConfig.getBaseUrl(), event);
@@ -36,6 +53,12 @@ public class RequestHandler implements IRequestHandler {
         }
     }
 
+    /**
+     * Validates the trackevent.
+     *
+     * @param event The trackevent to validate.
+     * @return True if it's a valid trackevent.
+     */
     private boolean validateTrackEvent(ITrackEvent event) {
         if(event.getTrackEventParams() == null || event.getTrackEventParams().size()<=0) {
             return false;

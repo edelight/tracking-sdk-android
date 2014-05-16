@@ -5,7 +5,7 @@ import android.util.Log;
 import java.util.Locale;
 
 /**
- * Created by michaelbanholzer on 15/05/14.
+ * A basic logger for the sdk.
  */
 public class Logger implements ILogger {
 

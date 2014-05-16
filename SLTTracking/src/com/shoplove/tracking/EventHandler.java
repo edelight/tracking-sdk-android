@@ -17,18 +17,29 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Created by michaelbanholzer on 15/05/14.
+ * The EventHandler acts as the core handler for all events.
+ * It creates the required HttpClient and constructs the basic header for all requests made by the ShopLove Tracking SDK.
  */
 public class EventHandler {
 
+    /** An implementation of the IRequestHandler interface. Used to enqueue the created events. */
     private IRequestHandler mRequestHandler;
 
+    /** A HttpConfiguration for the HttpClient and all generated requests. */
     private IHttpConfig mHttpConfig;
+
+    /** The HttpClient used to perform the requests. */
     private AbstractHttpClient mHttpClient;
 
-
+    /** The AppToken of the specific Client. */
     private String mAppToken;
 
+    /**
+     * Creates a new EventHandler.
+     *
+     * @param activity An activity to setup SDK.
+     * @param appToken The client AppToken.
+     */
     EventHandler(Activity activity, final String appToken) {
         mAppToken = appToken;
         mHttpClient = createHttpClient();
@@ -36,6 +47,12 @@ public class EventHandler {
         mRequestHandler = new RequestHandler(activity, mHttpClient, mHttpConfig);
     }
 
+    /**
+     * Creates a new Event to pass it to the RequestHandler.
+     * If it's not a valid action, the call will be ignored.
+     *
+     * @param action The action string to track.
+     */
     public void track(String action) {
 
         if(action == null || action.isEmpty()) {
@@ -55,7 +72,11 @@ public class EventHandler {
         }
     }
 
-
+    /**
+     * Creates and initializes a new HttpClient for the SDK.
+     *
+     * @return The created HttpClient.
+     */
     private AbstractHttpClient createHttpClient() {
 
         // following code solves Adapter is detached error
@@ -77,6 +98,11 @@ public class EventHandler {
         return client;
     }
 
+    /**
+     * Creates and returns the basic header fields for all requests.
+     *
+     * @return The header fields for the requests.
+     */
     private Map<String, String> getBaseHeaders() {
 
         if(mHttpConfig == null) return null;

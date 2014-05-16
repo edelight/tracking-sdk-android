@@ -1,9 +1,15 @@
 package com.shoplove.tracking;
 
 /**
- * Created by michaelbanholzer on 15/05/14.
+ * Interface for a RequestHandler.
  */
 public interface IRequestHandler {
-    public boolean addTrackEvent(ITrackEvent event);
 
+    /**
+     * Creates and enqueues a POST request.
+     *
+     * @param event The event to send.
+     * @return True, if the created request has been enqueued successfully.
+     */
+    public boolean addTrackEvent(ITrackEvent event);
 }
